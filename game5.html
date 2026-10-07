@@ -1,0 +1,1008 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>لعبة الحواس الخمس للأبطال 🌟</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: 'Baloo Bhaijaan 2', sans-serif;
+            user-select: none;
+        }
+
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            min-height: 100%;
+        }
+
+        body {
+            background-color: #FFDE59;
+            background-image: radial-gradient(#FF914D 2px, transparent 2px);
+            background-size: 30px 30px;
+
+            padding: 20px;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .game-card {
+            background: #FFFFFF;
+            border: 8px solid #5CE1E6;
+            border-radius: 35px;
+
+            padding: 25px;
+
+            width: 100%;
+            max-width: 650px;
+
+            text-align: center;
+
+            box-shadow:
+                0 15px 0 #38B6FF,
+                0 20px 25px rgba(0, 0, 0, 0.15);
+
+            position: relative;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            margin-bottom: 15px;
+        }
+
+        .child-badge {
+            background: #FF5757;
+            color: white;
+
+            padding: 8px 18px;
+
+            border-radius: 20px;
+
+            font-size: 1.3rem;
+
+            box-shadow: 0 4px 0 #C70000;
+
+            margin: 0 auto;
+        }
+
+        .sense-display {
+            background: #FFF6A5;
+
+            border: 4px dashed #FF914D;
+
+            border-radius: 25px;
+
+            padding: 15px;
+
+            margin-bottom: 25px;
+
+            width: 100%;
+        }
+
+        .sense-icon {
+            font-size: 5rem;
+
+            margin-bottom: 5px;
+
+            display: block;
+
+            animation: bounce 2s infinite;
+
+            line-height: 1.2;
+        }
+
+        .sense-title {
+            font-size: 1.8rem;
+
+            color: #020202;
+
+            margin: 0;
+
+            line-height: 1.3;
+        }
+
+        /* الخيارات */
+        .options-grid {
+            display: grid;
+
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+
+            gap: 15px;
+
+            margin-top: 20px;
+
+            width: 100%;
+        }
+
+        .option-btn {
+            background: #dbf1c5;
+
+            border: 4px solid #bff1bb;
+
+            border-radius: 25px;
+
+            padding: 15px;
+
+            cursor: pointer;
+
+            transition: transform 0.1s;
+
+            box-shadow: 0 4px 0 #2B8000;
+
+            min-width: 0;
+
+            width: 100%;
+
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .option-btn:active {
+            transform: translateY(4px);
+
+            box-shadow: 0 2px 0 #2B8000;
+        }
+
+        .option-btn .emoji {
+            font-size: 3.5rem;
+
+            display: block;
+
+            line-height: 1.2;
+
+            font-family:
+                "Apple Color Emoji",
+                "Segoe UI Emoji",
+                "Noto Color Emoji",
+                sans-serif;
+        }
+
+        .option-btn .label {
+            font-size: 1.2rem;
+
+            color: #2B8000;
+
+            margin-top: 5px;
+
+            display: block;
+
+            line-height: 1.3;
+
+            word-break: break-word;
+        }
+
+        /* شاشة الإجابة */
+        .overlay {
+            position: absolute;
+
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+
+            background: rgba(255, 255, 255, 0.95);
+
+            border-radius: 25px;
+
+            display: none;
+
+            flex-direction: column;
+
+            justify-content: center;
+
+            align-items: center;
+
+            z-index: 10;
+
+            padding: 20px;
+        }
+
+        .overlay-emoji {
+            font-size: 8rem;
+
+            margin-bottom: 10px;
+
+            border: none !important;
+            outline: none !important;
+            box-shadow: none !important;
+            text-shadow: none !important;
+            -webkit-text-stroke: 0 !important;
+
+            background: transparent !important;
+
+            font-family:
+                "Apple Color Emoji",
+                "Segoe UI Emoji",
+                "Noto Color Emoji",
+                sans-serif;
+
+            line-height: 1.1;
+        }
+
+        .overlay-text {
+            font-size: 2rem;
+
+            color: #333;
+
+            font-weight: bold;
+
+            line-height: 1.4;
+        }
+
+        .next-btn {
+            margin-top: 15px;
+
+            background: #FF66C4;
+
+            border: none;
+
+            color: white;
+
+            padding: 12px 30px;
+
+            font-size: 1.5rem;
+
+            border-radius: 20px;
+
+            cursor: pointer;
+
+            box-shadow: 0 5px 0 #C82A93;
+        }
+
+        .next-btn:active {
+            transform: translateY(3px);
+
+            box-shadow: 0 2px 0 #C82A93;
+        }
+
+        @keyframes bounce {
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        /* =====================================
+           الجوال
+        ===================================== */
+
+        @media (max-width: 600px) {
+
+            body {
+                padding: 10px;
+
+                min-height: 100vh;
+
+                align-items: flex-start;
+            }
+
+            .game-card {
+                width: 100%;
+
+                max-width: 100%;
+
+                border-width: 6px;
+
+                border-radius: 25px;
+
+                padding: 15px;
+
+                margin-top: 10px;
+
+                box-shadow:
+                    0 10px 0 #38B6FF,
+                    0 15px 20px rgba(0, 0, 0, 0.12);
+            }
+
+            .child-badge {
+                font-size: 1.05rem;
+
+                padding: 7px 14px;
+
+                white-space: nowrap;
+            }
+
+            .sense-display {
+                padding: 12px;
+
+                border-width: 3px;
+
+                border-radius: 20px;
+
+                margin-bottom: 18px;
+            }
+
+            .sense-icon {
+                font-size: 4rem;
+
+                margin-bottom: 3px;
+            }
+
+            .sense-title {
+                font-size: 1.45rem;
+            }
+
+            /*
+             * هنا أهم تعديل:
+             * الخيارات تصبح تحت بعض في الجوال
+             */
+            .options-grid {
+                grid-template-columns: 1fr;
+
+                gap: 12px;
+
+                width: 100%;
+
+                margin-top: 15px;
+            }
+
+            .option-btn {
+                width: 100%;
+
+                min-height: 105px;
+
+                padding: 10px 15px;
+
+                border-radius: 20px;
+
+                border-width: 3px;
+            }
+
+            .option-btn .emoji {
+                font-size: 3rem;
+            }
+
+            .option-btn .label {
+                font-size: 1.1rem;
+
+                margin-top: 3px;
+            }
+
+            .overlay {
+                border-radius: 20px;
+
+                padding: 15px;
+            }
+
+            .overlay-emoji {
+                font-size: 6rem;
+            }
+
+            .overlay-text {
+                font-size: 1.5rem;
+            }
+
+            .next-btn {
+                font-size: 1.25rem;
+
+                padding: 10px 24px;
+            }
+        }
+
+        /* شاشات الجوال الصغيرة جدًا */
+        @media (max-width: 380px) {
+
+            body {
+                padding: 7px;
+            }
+
+            .game-card {
+                padding: 12px;
+
+                border-width: 5px;
+            }
+
+            .sense-icon {
+                font-size: 3.5rem;
+            }
+
+            .sense-title {
+                font-size: 1.3rem;
+            }
+
+            .option-btn {
+                min-height: 95px;
+            }
+
+            .option-btn .emoji {
+                font-size: 2.7rem;
+            }
+
+            .option-btn .label {
+                font-size: 1rem;
+            }
+
+            .overlay-emoji {
+                font-size: 5rem;
+            }
+
+            .overlay-text {
+                font-size: 1.3rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- صوت التصفيق -->
+    <audio
+        id="clapAudio"
+        src="https://assets.mixkit.co/active_storage/sfx/2014/2014-preview.mp3"
+        preload="auto">
+    </audio>
+
+    <div class="game-card">
+
+        <div class="header">
+            <div class="child-badge" id="childCount">
+                البطل رقم: 1 / 28
+            </div>
+        </div>
+
+        <div class="sense-display">
+
+            <span class="sense-icon" id="senseIcon">
+                👁️
+            </span>
+
+            <h2 class="sense-title" id="senseName">
+                أرى بعيني
+            </h2>
+
+        </div>
+
+        <div
+            class="options-grid"
+            id="optionsContainer">
+        </div>
+
+        <div
+            class="overlay"
+            id="feedbackOverlay">
+
+            <div
+                class="overlay-emoji"
+                id="feedbackEmoji">
+                👏
+            </div>
+
+            <div
+                class="overlay-text"
+                id="feedbackText">
+                ممتاز! إجابة صحيحة
+            </div>
+
+            <button
+                class="next-btn"
+                id="nextBtn"
+                onclick="nextQuestion()">
+                السؤال التالي ➡️
+            </button>
+
+        </div>
+
+    </div>
+
+
+<script>
+
+const questions = [
+
+    {
+        sense: "أرى بعيني",
+        icon: "👁️",
+        options: [
+            {e: "🌈", l: "قوس قزح", c: true},
+            {e: "🎸", l: "جيتار", c: false},
+            {e: "🍕", l: "بيتزا", c: false}
+        ]
+    },
+
+    {
+        sense: "أسمع بأذني",
+        icon: "👂",
+        options: [
+            {e: "🎨", l: "ألوان", c: false},
+            {e: "🔔", l: "جرس", c: true},
+            {e: "🧊", l: "ثلج", c: false}
+        ]
+    },
+
+    {
+        sense: "أشم بأنفي",
+        icon: "👃",
+        options: [
+            {e: "🌹", l: "وردة", c: true},
+            {e: "🧸", l: "لعبة", c: false},
+            {e: "☀️", l: "شمس", c: false}
+        ]
+    },
+
+    {
+        sense: "أتذوق بلساني",
+        icon: "👅",
+        options: [
+            {e: "📚", l: "كتاب", c: false},
+            {e: "🍦", l: "آيس كريم", c: true},
+            {e: "🎧", l: "سماعة", c: false}
+        ]
+    },
+
+    {
+        sense: "ألمِس بيدي",
+        icon: "✋",
+        options: [
+            {e: "🧸", l: "دمية ناعمة", c: true},
+            {e: "🌙", l: "قمر", c: false},
+            {e: "📻", l: "راديو", c: false}
+        ]
+    },
+
+    {
+        sense: "أرى بعيني",
+        icon: "👁️",
+        options: [
+            {e: "📖", l: "قصة", c: true},
+            {e: "🍋", l: "ليمون", c: false},
+            {e: "🥁", l: "طبلة", c: false}
+        ]
+    },
+
+    {
+        sense: "أسمع بأذني",
+        icon: "👂",
+        options: [
+            {e: "🐱", l: "صوت القطة", c: true},
+            {e: "🌵", l: "صبار", c: false},
+            {e: "🍎", l: "تفاحة", c: false}
+        ]
+    },
+
+    {
+        sense: "أشم بأنفي",
+        icon: "👃",
+        options: [
+            {e: "⚽", l: "كرة", c: false},
+            {e: "🍕", l: "رائحة بيتزا زكية", c: true},
+            {e: "👓", l: "نظارة", c: false}
+        ]
+    },
+
+    {
+        sense: "أتذوق بلساني",
+        icon: "👅",
+        options: [
+            {e: "🍋", l: "ليمون حامض", c: true},
+            {e: "🕯️", l: "شمعة", c: false},
+            {e: "🚗", l: "سيارة", c: false}
+        ]
+    },
+
+    {
+        sense: "ألمِس بيدي",
+        icon: "✋",
+        options: [
+            {e: "🌵", l: "صبار شوكي", c: true},
+            {e: "🎨", l: "رسمة", c: false},
+            {e: "🔔", l: "جرس", c: false}
+        ]
+    },
+
+    {
+        sense: "أرى بعيني",
+        icon: "👁️",
+        options: [
+            {e: "📺", l: "تلفاز", c: true},
+            {e: "🧦", l: "جورب", c: false},
+            {e: "🍗", l: "دجاج", c: false}
+        ]
+    },
+
+    {
+        sense: "أسمع بأذني",
+        icon: "👂",
+        options: [
+            {e: "⏰", l: "المنبه", c: true},
+            {e: "🍌", l: "موز", c: false},
+            {e: "🖼️", l: "لوحة", c: false}
+        ]
+    },
+
+    {
+        sense: "أشم بأنفي",
+        icon: "👃",
+        options: [
+            {e: "🧼", l: "رائحة الصابون", c: true},
+            {e: "🔑", l: "مفتاح", c: false},
+            {e: "👟", l: "حذاء", c: false}
+        ]
+    },
+
+    {
+        sense: "أتذوق بلساني",
+        icon: "👅",
+        options: [
+            {e: "🍫", l: "شوكولاتة", c: true},
+            {e: "✏️", l: "قلم", c: false},
+            {e: "🌲", l: "شجرة", c: false}
+        ]
+    },
+
+    {
+        sense: "ألمِس بيدي",
+        icon: "✋",
+        options: [
+            {e: "🧊", l: "ثلج بارد", c: true},
+            {e: "🔊", l: "مكبر صوت", c: false},
+            {e: "🍓", l: "فراولة", c: false}
+        ]
+    },
+
+    {
+        sense: "أرى بعيني",
+        icon: "👁️",
+        options: [
+            {e: "⭐", l: "نجمة", c: true},
+            {e: "🎺", l: "بوق", c: false},
+            {e: "🧅", l: "بصل", c: false}
+        ]
+    },
+
+    {
+        sense: "أسمع بأذني",
+        icon: "👂",
+        options: [
+            {e: "🐤", l: "صوت صوص", c: true},
+            {e: "🎈", l: "بالون", c: false},
+            {e: "🥄", l: "ملعقة", c: false}
+        ]
+    },
+
+    {
+        sense: "أشم بأنفي",
+        icon: "👃",
+        options: [
+            {e: "☕", l: "قهوة", c: true},
+            {e: "🧩", l: "تركيبة", c: false},
+            {e: "✂️", l: "مقص", c: false}
+        ]
+    },
+
+    {
+        sense: "أتذوق بلساني",
+        icon: "👅",
+        options: [
+            {e: "🍉", l: "بطيخ حلو", c: true},
+            {e: "🚲", l: "دراجة", c: false},
+            {e: "📱", l: "هاتف", c: false}
+        ]
+    },
+
+    {
+        sense: "ألمِس بيدي",
+        icon: "✋",
+        options: [
+            {e: "🥚", l: "بيضة", c: true},
+            {e: "📻", l: "مذياع", c: false},
+            {e: "🕶️", l: "نظارة", c: false}
+        ]
+    },
+
+    {
+        sense: "أرى بعيني",
+        icon: "👁️",
+        options: [
+            {e: "🦋", l: "فراشة", c: true},
+            {e: "🥁", l: "طبل", c: false},
+            {e: "🧂", l: "ملح", c: false}
+        ]
+    },
+
+    {
+        sense: "أسمع بأذني",
+        icon: "👂",
+        options: [
+            {e: "🌧️", l: "صوت المطر", c: true},
+            {e: "🍰", l: "كعكة", c: false},
+            {e: "🧱", l: "جدار", c: false}
+        ]
+    },
+
+    {
+        sense: "أشم بأنفي",
+        icon: "👃",
+        options: [
+            {e: "🥖", l: "رائحة الخبز", c: true},
+            {e: "👟", l: "حذاء", c: false},
+            {e: "🧮", l: "عدّاد", c: false}
+        ]
+    },
+
+    {
+        sense: "أتذوق بلساني",
+        icon: "👅",
+        options: [
+            {e: "🍿", l: "فشار مالح", c: true},
+            {e: "🪑", l: "كرسي", c: false},
+            {e: "🧢", l: "قبعة", c: false}
+        ]
+    },
+
+    {
+        sense: "ألمِس بيدي",
+        icon: "✋",
+        options: [
+            {e: "⚾️", l: "كرة مطاطية", c: true},
+            {e: "💡", l: "مصباح", c: false},
+            {e: "🥕", l: "جزر", c: false}
+        ]
+    },
+
+    {
+        sense: "أرى بعيني",
+        icon: "👁️",
+        options: [
+            {e: "☀️", l: "شمس ساطعة", c: true},
+            {e: "🎵", l: "نغمة", c: false},
+            {e: "🧀", l: "جبن", c: false}
+        ]
+    },
+
+    {
+        sense: "أسمع بأذني",
+        icon: "👂",
+        options: [
+            {e: "🐦", l: "تغريد العصفور", c: true},
+            {e: "👕", l: "قميص", c: false},
+            {e: "🍇", l: "عنب", c: false}
+        ]
+    },
+
+    {
+        sense: "أشم بأنفي",
+        icon: "👃",
+        options: [
+            {e: "🌸", l: "زهرة الياسمين", c: true},
+            {e: "🚗", l: "سيارة", c: false},
+            {e: "⚽️", l: "كرة قدم", c: false}
+        ]
+    }
+
+];
+
+
+let currentIdx = 0;
+
+
+/* =========================
+   صوت التصفيق
+========================= */
+
+function playClapSound() {
+
+    const audio = document.getElementById("clapAudio");
+
+    if (!audio) {
+        console.log("لم يتم العثور على ملف الصوت");
+        return;
+    }
+
+    audio.currentTime = 0;
+
+    const playPromise = audio.play();
+
+    if (playPromise !== undefined) {
+
+        playPromise.catch(error => {
+            console.log("تعذر تشغيل الصوت:", error);
+        });
+
+    }
+}
+
+
+/* =========================
+   تحميل السؤال
+========================= */
+
+function loadQuestion() {
+
+    const q = questions[currentIdx];
+
+    document.getElementById("childCount").innerText =
+        `البطل رقم: ${currentIdx + 1} / ${questions.length}`;
+
+    document.getElementById("senseIcon").innerText =
+        q.icon;
+
+    document.getElementById("senseName").innerText =
+        q.sense;
+
+
+    const optionsContainer =
+        document.getElementById("optionsContainer");
+
+    optionsContainer.innerHTML = "";
+
+
+    const shuffled =
+        [...q.options].sort(() => Math.random() - 0.5);
+
+
+    shuffled.forEach(opt => {
+
+        const btn = document.createElement("div");
+
+        btn.className = "option-btn";
+
+        btn.innerHTML = `
+            <span class="emoji">${opt.e}</span>
+            <span class="label">${opt.l}</span>
+        `;
+
+        btn.onclick = () => {
+            checkAnswer(opt.c);
+        };
+
+        optionsContainer.appendChild(btn);
+
+    });
+
+
+    document.getElementById("feedbackOverlay").style.display =
+        "none";
+}
+
+
+/* =========================
+   التحقق من الإجابة
+========================= */
+
+function checkAnswer(isCorrect) {
+
+    const overlay =
+        document.getElementById("feedbackOverlay");
+
+    const emoji =
+        document.getElementById("feedbackEmoji");
+
+    const text =
+        document.getElementById("feedbackText");
+
+    const nextBtn =
+        document.getElementById("nextBtn");
+
+
+    overlay.style.display = "flex";
+
+
+    if (isCorrect) {
+
+        emoji.innerText = "👏🎉";
+
+        text.innerText = "أحسنت! إجابة صحيحة";
+
+        text.style.color = "#2B8000";
+
+        nextBtn.style.display = "inline-block";
+
+        playClapSound();
+
+    }
+
+    else {
+
+        emoji.innerText = "😞";
+
+        text.innerText = "حاول مرة أخرى!";
+
+        text.style.color = "#C70000";
+
+        nextBtn.style.display = "none";
+
+
+        setTimeout(() => {
+
+            overlay.style.display = "none";
+
+        }, 1500);
+
+    }
+
+}
+
+
+/* =========================
+   السؤال التالي
+========================= */
+
+function nextQuestion() {
+
+    currentIdx++;
+
+
+    if (currentIdx < questions.length) {
+
+        loadQuestion();
+
+    }
+
+    else {
+
+        const overlay =
+            document.getElementById("feedbackOverlay");
+
+        const emoji =
+            document.getElementById("feedbackEmoji");
+
+        const text =
+            document.getElementById("feedbackText");
+
+        const nextBtn =
+            document.getElementById("nextBtn");
+
+
+        overlay.style.display = "flex";
+
+        emoji.innerText = "🏆";
+
+        text.innerText =
+            "رائع جداً! أكمل جميع الأبطال اللعبة بنجاح!";
+
+        text.style.color = "#2B8000";
+
+
+        nextBtn.innerText =
+            "إعادة اللعب 🔄";
+
+
+        nextBtn.style.display =
+            "inline-block";
+
+
+        nextBtn.onclick = () => {
+
+            currentIdx = 0;
+
+            loadQuestion();
+
+            nextBtn.onclick =
+                nextQuestion;
+
+        };
+
+    }
+
+}
+
+
+/* تشغيل أول سؤال */
+loadQuestion();
+
+</script>
+
+</body>
+</html>
